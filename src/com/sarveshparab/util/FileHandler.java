@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 public class FileHandler {
 
-    private static String readLineByLine(String filePath) {
+    public static String readLineByLine(String filePath) {
         StringBuilder contentBuilder = new StringBuilder();
 
         try (Stream<String> stream = Files.lines(Paths.get(filePath), StandardCharsets.UTF_8)) {
