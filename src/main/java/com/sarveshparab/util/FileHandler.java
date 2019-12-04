@@ -19,4 +19,9 @@ public class FileHandler {
 
         return contentBuilder.toString();
     }
+
+    public static String[] splitFileLineByLine(String fileContent){
+        String returnArray[]=fileContent.split("\n");
+        return returnArray;
+    }
 }
