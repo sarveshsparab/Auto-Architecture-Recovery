@@ -7,4 +7,6 @@ public class Conf {
 
     public static final String FILE_EXT = ".java";
 
+    public static final String BANNED_PACKAGE_PATH="src/main/java/com/sarveshparab/domain/banned.txt";
+
 }
