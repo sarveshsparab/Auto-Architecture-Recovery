@@ -37,9 +37,6 @@ public class SentenceSimilarity {
 
         List<String> tokenUnion = Misc.listUnion(token1, token2);
 
-        System.out.println(token1);
-        System.out.println(token2);
-
         List<Double> vect1 = vectorizer.vectorize(token1, tokenUnion, new Relevance(Misc.db, Misc.rcList.get(simAlgo.useAlgo())),
                 Misc.algoMax.get(simAlgo.useAlgo()));
         List<Double> vect2 = vectorizer.vectorize(token2,tokenUnion,new Relevance(Misc.db, Misc.rcList.get(simAlgo.useAlgo())),
