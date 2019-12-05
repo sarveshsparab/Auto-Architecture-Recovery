@@ -88,7 +88,7 @@ public class SemanticAnalyser {
         return stopWordPunc.removeStop(words);
     }
 
-    public List<String> remvePLWords(List<String> words){
-        return plKeyWords.removeJavaWords(words);
+    public List<String> removePLWords(List<String> words){
+        return plKeyWords.removeJavaWords(plKeyWords.removeCWords(words));
     }
 }
