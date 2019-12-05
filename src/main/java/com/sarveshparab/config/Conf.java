@@ -14,4 +14,6 @@ public class Conf {
     public static final String ZK_REMOTE_GIT_URL = "https://github.com/apache/zookeeper.git";
 
     public static final String ZK_REMOTE_GIT_REPO = "src/main/resources/gitRepo";
+
+    public static final String ZK_COMMIT_ID = "382212371090f46aa1937ed471aa2e37ad5f52a1";
 }

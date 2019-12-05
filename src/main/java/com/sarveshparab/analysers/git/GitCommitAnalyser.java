@@ -1,6 +1,7 @@
 package com.sarveshparab.analysers.git;
 
 
+import com.sarveshparab.config.Conf;
 import com.sarveshparab.util.GitTreeUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -34,8 +35,18 @@ public class GitCommitAnalyser {
                     .setURI(gitURL)
                     .setDirectory(localPath)
                     .call();
-
-            git = Git.open(localPath);
+//
+//
+//            git.checkout()
+//                    .setCreateBranch(true)
+//                    .setName("new-branch")
+//                    .setStartPoint("<id-to-commit>")
+//                    .call();
+           // git =
+            Git.open(localPath).checkout().setCreateBranch(true)
+                    .setName("new-branch")
+                    .setStartPoint(Conf.ZK_COMMIT_ID)
+                    .call();;
             repository = git.getRepository();
 
 
