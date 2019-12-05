@@ -1,7 +1,9 @@
 package com.sarveshparab.analysers.semantic;
 
 import com.sarveshparab.analysers.semantic.dictionary.Trie;
+import com.sarveshparab.analysers.semantic.linguistic.PLKeyWords;
 import com.sarveshparab.analysers.semantic.linguistic.SimAlgo;
+import com.sarveshparab.analysers.semantic.linguistic.StopWordPunc;
 import com.sarveshparab.analysers.semantic.similarity.SentenceSimilarity;
 import com.sarveshparab.analysers.semantic.similarity.WordSimilarity;
 import com.sarveshparab.config.Conf;
@@ -21,6 +23,9 @@ public class SemanticAnalyser {
     private WordSimilarity wordSimilarity;
     private SentenceSimilarity sentenceSimilarity;
 
+    private StopWordPunc stopWordPunc;
+    private PLKeyWords plKeyWords;
+
     public SemanticAnalyser() {
         this.fileContentsMap = new HashMap<>();
 
@@ -32,6 +37,8 @@ public class SemanticAnalyser {
 
         wordSimilarity = new WordSimilarity();
         sentenceSimilarity = new SentenceSimilarity(trie);
+        stopWordPunc = new StopWordPunc(trie);
+        plKeyWords = new PLKeyWords();
     }
 
     private void analyze() {
@@ -75,5 +82,13 @@ public class SemanticAnalyser {
 
     public double[] simWordsMulti(String word1, String word2, List<SimAlgo> simAlgo){
         return wordSimilarity.calcSimMulti(word1, word2, simAlgo);
+    }
+
+    public List<String> removeStopWords(List<String> words){
+        return stopWordPunc.removeStop(words);
+    }
+
+    public List<String> remvePLWords(List<String> words){
+        return plKeyWords.removeJavaWords(words);
     }
 }
