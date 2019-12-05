@@ -10,4 +10,15 @@ public class StringManipulator {
         return String.join(sysDelim, elems);
     }
 
+    public static String listToString(List<String> s, String delimiter){
+        StringBuffer ret = new StringBuffer("");
+        for (int i = 0; s != null && i < s.size(); i++) {
+            ret.append(s.get(i));
+            if (i < s.size() - 1) {
+                ret.append(delimiter);
+            }
+        }
+        return ret.toString();
+    }
+
 }
