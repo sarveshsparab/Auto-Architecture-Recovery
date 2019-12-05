@@ -20,7 +20,7 @@ public class PLKeyWords {
         Iterator<String> itr = words.iterator();
         while(itr.hasNext()) {
             String element = itr.next();
-            if(javaKeyWords.contains(element)){
+            if(javaKeyWords.contains(element.toLowerCase())){
 
             }else{
                 afterRemoval.add(element);
@@ -34,7 +34,7 @@ public class PLKeyWords {
         Iterator<String> itr = words.iterator();
         while(itr.hasNext()) {
             String element = itr.next();
-            if(cKeyWords.contains(element)){
+            if(cKeyWords.contains(element.toLowerCase())){
 
             }else{
                 afterRemoval.add(element);
