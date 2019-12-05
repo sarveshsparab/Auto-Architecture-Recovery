@@ -9,6 +9,7 @@ import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -23,13 +24,14 @@ public class GitCommitAnalyser {
 
     Git git = null;
     Repository repository = null;
+    File localPath = null;
 
 
     // takes location of remote git and address where you want to clone the repo
     public void gitRemoteClone(String gitURL,String filePath) {
 
         System.out.println(" Starting to clone remote git repo");
-        File localPath = new File(filePath);
+        localPath = new File(filePath);
         try {
              git = Git.cloneRepository()
                     .setURI(gitURL)
@@ -46,7 +48,7 @@ public class GitCommitAnalyser {
             Git.open(localPath).checkout().setCreateBranch(true)
                     .setName("new-branch")
                     .setStartPoint(Conf.ZK_COMMIT_ID)
-                    .call();;
+                    .call();
             repository = git.getRepository();
 
 
@@ -135,6 +137,46 @@ public class GitCommitAnalyser {
             System.out.println(" Repo did not get deleted");
             e.printStackTrace();
         }
+
+    }
+
+
+    public List<String> getCommitIds(String filePath){
+        List<String> commitIds = new ArrayList<>();
+
+
+        try {
+//            Git gitSample = new Git(repository);
+//            Iterable<RevCommit> logs1 = gitSample.log()
+//                    .all()
+//                    .call();
+//            int count = 0;
+//            for (RevCommit rev : logs1) {
+//                System.out.println("Commit: " + rev.getShortMessage()  + ", name: " + rev.getName() + ", id: " + rev.getId().getName());
+//                count++;
+//            }
+//            System.out.println(" All commits :- " + count);
+
+
+            Iterable<RevCommit> logs = git.log()
+                    .addPath(filePath)
+                    .call();
+            System.out.println("Logs retrieved ");
+
+            int count = 0;
+            for (RevCommit rev : logs) {
+                System.out.println("Commit: " + rev.getShortMessage()  + ", name: " + rev.getName() + ", id: " + rev.getId() );
+                commitIds.add(rev.getName());
+                count++;
+            }
+            System.out.println(" All  commits  in file:- " + count);
+
+        } catch (GitAPIException e) {
+            e.printStackTrace();
+        }
+
+
+        return commitIds;
 
     }
 

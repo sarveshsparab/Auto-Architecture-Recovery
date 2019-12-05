@@ -15,5 +15,5 @@ public class Conf {
 
     public static final String ZK_REMOTE_GIT_REPO = "src/main/resources/gitRepo";
 
-    public static final String ZK_COMMIT_ID = "382212371090f46aa1937ed471aa2e37ad5f52a1";
+    public static final String ZK_COMMIT_ID = "0383625b5b4adb14b774f322704456596e7ab185";
 }
