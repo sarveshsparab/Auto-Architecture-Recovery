@@ -1,5 +1,9 @@
 package com.sarveshparab.primary;
 
+import com.sarveshparab.analysers.git.CommitFileObject;
+import com.sarveshparab.analysers.git.GitCommitAnalyser;
+import com.sarveshparab.analysers.semantic.SemanticAnalyser;
+import com.sarveshparab.config.Conf;
 
 import com.sarveshparab.analysers.imports.FileImportsPopulator;
 import com.sarveshparab.config.Conf;
@@ -24,5 +28,15 @@ public class BaseLogic {
 ////        }
         FileImportsPopulator f=new FileImportsPopulator();
         f.createFileImportMap(filelist);
+//        SemanticAnalyser semanticAnalyser = new SemanticAnalyser();
+//        semanticAnalyser.analyze();
+
+
+//        GitCommitAnalyser gitCommitAnalyser = new GitCommitAnalyser();
+//        gitCommitAnalyser.gitRemoteClone(Conf.ZK_REMOTE_GIT_URL,Conf.ZK_REMOTE_GIT_REPO);
+//        String commitMessage = gitCommitAnalyser.getCommitMessage("553639378d5cf86c2488afff4586e5e4cce38061");
+//        CommitFileObject commitFileObject = gitCommitAnalyser.getCommitFiles("553639378d5cf86c2488afff4586e5e4cce38061");
+//        System.out.println(commitFileObject.getAddedFiles());
+//        gitCommitAnalyser.deleteGitRemoteClone(Conf.ZK_REMOTE_GIT_REPO);
     }
 }

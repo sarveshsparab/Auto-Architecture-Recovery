@@ -11,4 +11,7 @@ public class Conf {
 
     public static String wordsListPath = "src/main/resources/data/EnglishWords/words.txt";
 
+    public static final String ZK_REMOTE_GIT_URL = "https://github.com/apache/zookeeper.git";
+
+    public static final String ZK_REMOTE_GIT_REPO = "src/main/resources/gitRepo";
 }
