@@ -21,4 +21,11 @@ public class StringManipulator {
         return ret.toString();
     }
 
+    public static List<String> removeCamelCase(String str){
+        List<String> postRemoval = Arrays.asList(str.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])"));
+
+
+        return postRemoval;
+    }
+
 }
