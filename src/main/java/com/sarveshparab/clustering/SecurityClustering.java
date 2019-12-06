@@ -14,12 +14,14 @@ public class SecurityClustering {
 
     public SecurityClustering(){
         semanticAnalyser=new SemanticAnalyser();
-        reflectionBasedAnalyser=new ReflectionBasedAnalyser(semanticAnalyser,false);
+        reflectionBasedAnalyser=new ReflectionBasedAnalyser(semanticAnalyser,true);
         filenames=new ArrayList<>();
     }
 
 
     public List<String> generateCluster(Set<String> smellyFiles){
+
+        int count = 0;
 
         for(String concernFile:smellyFiles) {
             List<String> fileWords = reflectionBasedAnalyser.extractAllFeatures(concernFile);
@@ -32,6 +34,9 @@ public class SecurityClustering {
             || wordMacthes.get(MatchType.HYBRID).size()>=10) {
                 filenames.add(concernFile);
             }
+
+            count++;
+            System.out.println("Processing : " + count + " / " + smellyFiles.size());
         }
 
         return filenames;
