@@ -5,19 +5,16 @@ import com.sarveshparab.config.Conf;
 import com.sarveshparab.util.GitTreeUtil;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.*;
+import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.treewalk.AbstractTreeIterator;
-import org.eclipse.jgit.treewalk.CanonicalTreeParser;
+
+
 
 
 public class GitCommitAnalyser {
@@ -177,6 +174,33 @@ public class GitCommitAnalyser {
 
 
         return commitIds;
+
+    }
+
+    public void buildFruequencyMap(List<String> fileNames){
+
+        List<String> cummlativeCommitIds = new ArrayList<>();
+
+
+        for(String fileName : fileNames){
+            List<String> commitIdsOfFile = getCommitIds(fileName);
+            cummlativeCommitIds.addAll(commitIdsOfFile);
+
+        }
+
+        Map<String,Integer> freqMap =new HashMap<>();
+
+        for(String commitId :cummlativeCommitIds){
+            freqMap.put(commitId,freqMap.getOrDefault(commitId,0)+1);
+        }
+
+
+        final Map<String, Integer> sortedByCount = freqMap.entrySet()
+                .stream()
+                .sorted((Map.Entry.<String, Integer>comparingByValue().reversed()))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+
+        System.out.println(sortedByCount.toString());
 
     }
 
