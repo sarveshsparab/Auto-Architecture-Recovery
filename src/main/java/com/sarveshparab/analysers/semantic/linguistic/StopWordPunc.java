@@ -45,7 +45,8 @@ public class StopWordPunc {
         Iterator<String> itr = words.iterator();
         while(itr.hasNext()) {
             String element = itr.next();
-            if(stopWordSet.contains(element) || stopWordSetStemmed.contains(element)){
+            if(stopWordSet.contains(element.toLowerCase()) || stopWordSetStemmed.contains(element.toLowerCase())
+                    || element.length() < 3){
 
             }else{
                 afterRemoval.add(element);
