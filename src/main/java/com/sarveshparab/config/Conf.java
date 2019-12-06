@@ -12,6 +12,8 @@ public class Conf {
 
     public static final String BANNED_PACKAGE_PATH="src/main/java/com/sarveshparab/domain/banned.txt";
 
+    public static final String SECURITY_DOMAIN_FILE_PATH="src/main/java/com/sarveshparab/domain/securitydomainlist.txt";
+
     public static String wordsListPath = "src/main/resources/data/EnglishWords/words.txt";
 
     public static final String ZK_REMOTE_GIT_URL = "https://github.com/apache/zookeeper.git";
