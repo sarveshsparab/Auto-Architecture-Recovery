@@ -24,7 +24,7 @@ public class SecurityClustering {
         int count = 0;
 
         for(String concernFile:smellyFiles) {
-            List<String> fileWords = reflectionBasedAnalyser.extractAllFeatures(concernFile);
+            Set<String> fileWords = reflectionBasedAnalyser.extractAllFeatures(concernFile, false);
             //pass file words to domain analyser
             DomainAnalyser domainAnalyser = new DomainAnalyser(semanticAnalyser);
             //receive output from domain in a map
