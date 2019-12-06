@@ -24,5 +24,5 @@ public class Conf {
 
     public static final String ZK_PRE_SMELL_FILE = "src/main/resources/subjectsystem/pre/arcoutput/zk_pre_arc_smells.ser";
 
-    public static final String REFLECT_ANALYSIS_DUMP_DIR = "src/main/resources/data/RelectionData/";
+    public static final String REFLECT_ANALYSIS_DUMP_DIR = "src/main/resources/data/ReflectionData/";
 }
