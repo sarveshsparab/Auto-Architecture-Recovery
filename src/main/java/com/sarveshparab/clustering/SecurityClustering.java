@@ -28,7 +28,8 @@ public class SecurityClustering {
             //receive output from domain in a map
             HashMap<Enum<MatchType>, List<String>> wordMacthes = domainAnalyser.returnMatches(fileWords);
 
-            if (wordMacthes.get(MatchType.EXACT).size() >= 1 || wordMacthes.get(MatchType.SYNONYM).size() > 10) {
+            if (wordMacthes.get(MatchType.EXACT).size() >= 1 || wordMacthes.get(MatchType.SYNONYM).size() >= 10
+            || wordMacthes.get(MatchType.HYBRID).size()>=10) {
                 filenames.add(concernFile);
             }
         }
