@@ -1,0 +1,13 @@
+getObservingMembers
+getVersion
+Quorum
+setVersion
+containsQuorum
+getWeight
+Observing
+Weight
+getVotingMembers
+Voting
+Version
+getAllMembers
+Members
