@@ -54,6 +54,28 @@ public class FileHandler {
         return lines;
     }
 
+    public static void writeListToFile(String filePath, List<String> stringList) {
+
+        Path out = Paths.get(filePath);
+        try {
+            Files.write(out, stringList, Charset.defaultCharset());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static List<String> readListFromFile(String filePath){
+
+        List<String> lines = new ArrayList<>();
+        try {
+            lines = Files.readAllLines(new File(filePath).toPath(), Charset.defaultCharset());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lines;
+    }
+
     public static boolean doesFileExists(String filePath){
 
         return Files.exists(Paths.get(filePath));

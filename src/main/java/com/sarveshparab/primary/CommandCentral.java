@@ -16,7 +16,9 @@ public class CommandCentral {
         SecurityClustering securityClustering = new SecurityClustering();
 
         smellAnalyser.runSmellAnalyser(Conf.ZK_PRE_SMELL_FILE);
-        List<String> secFiles = securityClustering.generateCluster(smellAnalyser.getSmellyFiles());
+        List<String> secFiles = securityClustering.generateCluster(smellAnalyser.getSmellyFiles(), true);
+
+
 
         System.out.println(secFiles);
         System.out.println(secFiles.size());

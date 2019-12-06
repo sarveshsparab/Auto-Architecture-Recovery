@@ -29,5 +29,6 @@ public class Conf {
     public static final String JAVA_KEY_WORDS_FILE = "src/main/resources/data/PLWords/javaKeyWords.txt";
     public static final String C_KEY_WORDS_FILE = "src/main/resources/data/PLWords/cKeyWords.txt";
 
+    public static final String SECURITY_CLUSTER_DUMP = "src/main/resources/data/SecurityClustering/secClusters.data";
 
 }

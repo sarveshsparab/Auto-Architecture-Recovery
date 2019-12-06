@@ -4,6 +4,9 @@ import com.sarveshparab.analysers.classfile.ReflectionBasedAnalyser;
 import com.sarveshparab.analysers.domain.DomainAnalyser;
 import com.sarveshparab.analysers.domain.MatchType;
 import com.sarveshparab.analysers.semantic.SemanticAnalyser;
+import com.sarveshparab.config.Conf;
+import com.sarveshparab.util.FileHandler;
+
 import java.util.*;
 
 public class SecurityClustering {
@@ -18,12 +21,13 @@ public class SecurityClustering {
         filenames=new ArrayList<>();
     }
 
-    public List<String> generateCluster(Set<String> smellyFiles){
+    public List<String> generateCluster(Set<String> smellyFiles, boolean loadPreGenerated){
+
+        if (loadPreGenerated && FileHandler.doesFileExists(Conf.SECURITY_CLUSTER_DUMP)){
+            return FileHandler.readListFromFile(Conf.SECURITY_CLUSTER_DUMP);
+        }
 
         int count = 0;
-
-        Set<String> exactWords = new HashSet<>();
-
 
         for(String concernFile:smellyFiles) {
             Set<String> fileWords = reflectionBasedAnalyser.extractAllFeatures(concernFile, true);
@@ -38,7 +42,6 @@ public class SecurityClustering {
 
             if (wordMatches.get(MatchType.EXACT).size() >= 3 && wordMatches.get(MatchType.SYNONYM).size() >= 2){
                 filenames.add(concernFile);
-                exactWords.addAll(wordMatches.get(MatchType.EXACT));
             } else if(wordMatches.get(MatchType.HYBRID).size()>=10) {
                 filenames.add(concernFile);
             }
@@ -46,6 +49,8 @@ public class SecurityClustering {
             count++;
 //            System.out.println("Processing : " + count + " / " + smellyFiles.size());
         }
+
+        FileHandler.writeListToFile(Conf.SECURITY_CLUSTER_DUMP, filenames);
 
         return filenames;
     }
