@@ -64,6 +64,7 @@ public class DomainAnalyser {
 
       returnMap.put(MatchType.EXACT,exactMatches);
       returnMap.put(MatchType.SYNONYM,synonymMatches);
+      returnMap.put(MatchType.HYBRID,hybridMatches);
 
       return returnMap;
     }
