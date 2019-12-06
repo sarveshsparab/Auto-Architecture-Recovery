@@ -2,6 +2,7 @@ package com.sarveshparab.analysers.classfile;
 
 import com.sarveshparab.analysers.semantic.SemanticAnalyser;
 import com.sarveshparab.config.Conf;
+import com.sarveshparab.util.FileHandler;
 import com.sarveshparab.util.StringManipulator;
 
 import java.io.File;
@@ -22,11 +23,11 @@ public class ReflectionBasedAnalyser {
 
     public ReflectionBasedAnalyser(SemanticAnalyser semanticAnalyser, boolean usePre){
         File file;
-        if (usePre)
+        if (usePre) {
             file = new File(Conf.ZK_PRE_BUILD_PATH + "classes/");
-        else
+        } else {
             file = new File(Conf.ZK_POST_BUILD_PATH + "classes/");
-
+        }
         URL url = null;
         try {
             url = file.toURI().toURL();
@@ -36,18 +37,15 @@ public class ReflectionBasedAnalyser {
         URL[] urls = new URL[]{url};
 
         classLoader = new URLClassLoader(urls);
+
         this.semanticAnalyser = semanticAnalyser;
     }
 
-    private List<String> getMethodFeatures(String classname, boolean removeCamelCase) {
+    private List<String> getMethodFeatures(String classname, boolean removeCamelCase) throws ClassNotFoundException {
         List<String> mNames = new ArrayList<>();
 
-        Class cls = null;
-        try {
-            cls = classLoader.loadClass(classname);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        Class cls = classLoader.loadClass(classname);
+
         Method[] methods = cls.getMethods();
 
         for (Method method : methods){
@@ -66,15 +64,10 @@ public class ReflectionBasedAnalyser {
         return mNames;
     }
 
-    private List<String> getVariableFeatures(String classname, boolean removeCamelCase) {
+    private List<String> getVariableFeatures(String classname, boolean removeCamelCase) throws ClassNotFoundException {
         List<String> vNames = new ArrayList<>();
 
-        Class cls = null;
-        try {
-            cls = classLoader.loadClass(classname);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        Class cls = classLoader.loadClass(classname);
         Field[] fields = cls.getFields();
 
         for (Field field : fields){
@@ -99,15 +92,10 @@ public class ReflectionBasedAnalyser {
         return vNames;
     }
 
-    private List<String> getInheritanceFeatures(String classname, boolean removeCamelCase) {
+    private List<String> getInheritanceFeatures(String classname, boolean removeCamelCase) throws ClassNotFoundException {
         List<String> iNames = new ArrayList<>();
 
-        Class cls = null;
-        try {
-            cls = classLoader.loadClass(classname);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        Class cls = classLoader.loadClass(classname);
         Class[] inheritences = cls.getInterfaces();
 
         for (Class inherit : inheritences){
@@ -120,7 +108,8 @@ public class ReflectionBasedAnalyser {
             iNames.add(inherit.getSimpleName());
         }
 
-        iNames.add(cls.getSuperclass().getSimpleName());
+        if (cls.getSuperclass() != null)
+            iNames.add(cls.getSuperclass().getSimpleName());
 
         if (removeCamelCase){
             List<List<String>> postRemoval = iNames.stream().map(StringManipulator::removeCamelCase).collect(Collectors.toList());
@@ -134,9 +123,24 @@ public class ReflectionBasedAnalyser {
 
     public List<String> extractAllFeatures(String className){
         List<String> features = new ArrayList<>();
-        features.addAll(getMethodFeatures(className, true));
-        features.addAll(getVariableFeatures(className, true));
-        features.addAll(getInheritanceFeatures(className, true));
+
+        String reflectDataDumpLoc = Conf.REFLECT_ANALYSIS_DUMP_DIR + StringManipulator.changeDotToUnderscore(className) + ".data";
+
+        if(FileHandler.doesFileExists(reflectDataDumpLoc)){
+            System.out.print("Loaded from existing ... ");
+            return FileHandler.readListFromFile(reflectDataDumpLoc);
+        }
+
+        try {
+            features.addAll(getMethodFeatures(className, true));
+            features.addAll(getVariableFeatures(className, true));
+            features.addAll(getInheritanceFeatures(className, true));
+
+            FileHandler.writeListToFile(reflectDataDumpLoc, features);
+        } catch (ClassNotFoundException e){
+            System.err.println("Failed for : " + className + "   |   -> " + e.getMessage());
+        }
+
         return features;
     }
 }
