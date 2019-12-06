@@ -5,6 +5,7 @@ import com.sarveshparab.analysers.semantic.linguistic.SimAlgo;
 import com.sarveshparab.analysers.semantic.similarity.SentenceSimilarityAlgorithms;
 import com.sarveshparab.config.Conf;
 import com.sarveshparab.util.FileHandler;
+import com.sarveshparab.util.Misc;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,6 +22,7 @@ public class DomainAnalyser {
     private List<String> data;
     private SemanticAnalyser semanticAnalyser;
     private List<SimAlgo> similarityAlgos;
+    private SentenceSimilarityAlgorithms sentenceSimilarityAlgorithms;
 
     public DomainAnalyser(SemanticAnalyser semanticAnalyser){
         fileContent= FileHandler.readLineByLine(Conf.SECURITY_DOMAIN_FILE_PATH);
@@ -28,6 +30,7 @@ public class DomainAnalyser {
         domainSet=new HashSet<>(data);
         this.semanticAnalyser=semanticAnalyser;
         similarityAlgos=new ArrayList<>();
+        sentenceSimilarityAlgorithms=new SentenceSimilarityAlgorithms();
     }
 
     public HashMap<Enum<MatchType> , List<String>> returnMatches(Set<String> fileWords){
@@ -47,11 +50,11 @@ public class DomainAnalyser {
               continue;
           }
           for(String domainWord:domainSet){
-              double sim=semanticAnalyser.simWords(word,domainWord,similarityAlgos.get(4));
-              SentenceSimilarityAlgorithms sentenceSimilarityAlgorithms=new SentenceSimilarityAlgorithms();
+              double sim=semanticAnalyser.simWords(word,domainWord, SimAlgo.Lin) / Misc.algoMax.get(SimAlgo.Lin.useAlgo());
               double hybridSim=sentenceSimilarityAlgorithms.avgSimilarity(word,domainWord);
-              if(sim>0.80){
+              if(sim>0.30){
                   synonymMatches.add(word);
+//                  System.out.println(domainWord + " == " + word + " ----> " + sim);
                   continue process;
               }
               else if(hybridSim>0.80){
