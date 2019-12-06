@@ -11,10 +11,7 @@ import com.sarveshparab.util.FileHandler;
 import com.sarveshparab.util.StringManipulator;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SemanticAnalyser {
     private Map<String, String> fileContentsMap;
@@ -88,7 +85,16 @@ public class SemanticAnalyser {
         return stopWordPunc.removeStop(words);
     }
 
+    public List<String> removeStopWords(Set<String> words) {
+        return removeStopWords(new ArrayList<String>(words));
+    }
+
     public List<String> removePLWords(List<String> words){
         return plKeyWords.removeJavaWords(plKeyWords.removeCWords(words));
     }
+
+    public List<String> removePLWords(Set<String> words){
+        return removePLWords(new ArrayList<>(words));
+    }
+
 }
