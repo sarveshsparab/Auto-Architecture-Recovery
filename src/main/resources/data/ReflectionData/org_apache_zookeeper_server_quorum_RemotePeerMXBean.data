@@ -1,0 +1,14 @@
+getName
+getQuorumAddress
+getLearnerType
+getClientAddress
+getElectionAddress
+Name
+Quorum
+Address
+Learner
+Type
+Client
+Address
+Election
+Address
