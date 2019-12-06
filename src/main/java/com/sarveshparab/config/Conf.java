@@ -17,10 +17,9 @@ public class Conf {
     public static final String wordsListPath = "src/main/resources/data/EnglishWords/words.txt";
 
     public static final String ZK_REMOTE_GIT_URL = "https://github.com/apache/zookeeper.git";
-
     public static final String ZK_REMOTE_GIT_REPO = "src/main/resources/gitRepo";
-
     public static final String ZK_COMMIT_ID = "0383625b5b4adb14b774f322704456596e7ab185";
+    public static final String ZK_REMOTE_SRC_PATH = "src/java/main/";
 
     public static final String ZK_PRE_SMELL_FILE = "src/main/resources/subjectsystem/pre/arcoutput/zk_pre_arc_smells.ser";
 
