@@ -8,6 +8,7 @@ import com.sarveshparab.config.Conf;
 import com.sarveshparab.util.FileHandler;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class DomainAnalyser {
     //compare with domain file list
@@ -36,31 +37,59 @@ public class DomainAnalyser {
       List<String> synonymMatches=new ArrayList<>();
       List<String> hybridMatches=new ArrayList<>();
       populateAlgo(similarityAlgos);
-      for(String word:fileWords){
+
+      domainSet = (HashSet<String>) domainSet.stream().map(String::toLowerCase).collect(Collectors.toSet());
+
+      process:for(String word:fileWords){
+          word=word.toLowerCase();
           if(domainSet.contains(word)){
+
               exactMatches.add(word);
+              continue;
           }
-      }
-
-      for(String fileWord:fileWords){
-            for(String domainWord:domainSet){
-                double sim=semanticAnalyser.simWords(fileWord.toLowerCase(),domainWord.toLowerCase(),similarityAlgos.get(4));
-                if(sim>0.60){
-                    synonymMatches.add(fileWord);
-                }
-            }
-      }
-
-      for(String fileWord:fileWords){
           for(String domainWord:domainSet){
+              double sim=semanticAnalyser.simWords(word,domainWord,similarityAlgos.get(4));
               SentenceSimilarityAlgorithms sentenceSimilarityAlgorithms=new SentenceSimilarityAlgorithms();
-              double sim=sentenceSimilarityAlgorithms.avgSimilarity(fileWord,domainWord);
-              if(sim>0.60){
-                  hybridMatches.add(fileWord);
+              double hybridSim=sentenceSimilarityAlgorithms.avgSimilarity(word,domainWord);
+              if(sim>0.80){
+                  synonymMatches.add(word);
+                  continue process;
+              }
+              else if(hybridSim>0.80){
+                  hybridMatches.add(word);
               }
 
           }
+
+
       }
+
+//
+//      for(String word:fileWords){
+//          if(domainSet.contains(word)){
+//              exactMatches.add(word);
+//          }
+//      }
+//
+//      for(String fileWord:fileWords){
+//            for(String domainWord:domainSet){
+//                double sim=semanticAnalyser.simWords(fileWord.toLowerCase(),domainWord.toLowerCase(),similarityAlgos.get(4));
+//                if(sim>0.60){
+//                    synonymMatches.add(fileWord);
+//                }
+//            }
+//      }
+//
+//      for(String fileWord:fileWords){
+//          for(String domainWord:domainSet){
+//              SentenceSimilarityAlgorithms sentenceSimilarityAlgorithms=new SentenceSimilarityAlgorithms();
+//              double sim=sentenceSimilarityAlgorithms.avgSimilarity(fileWord,domainWord);
+//              if(sim>0.60){
+//                  hybridMatches.add(fileWord);
+//              }
+//
+//          }
+//      }
 
       returnMap.put(MatchType.EXACT,exactMatches);
       returnMap.put(MatchType.SYNONYM,synonymMatches);
