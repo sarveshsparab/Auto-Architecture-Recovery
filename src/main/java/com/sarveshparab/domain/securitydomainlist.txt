@@ -70,6 +70,8 @@ realm
 clientname
 retry
 retries
+observing
+id
 voting
 connections
 connect
@@ -79,6 +81,11 @@ fail
 privilege
 permission
 permit
+learners
 vote
 Path
 token
+observer
+leader
+observe
+quorumpeer
