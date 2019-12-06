@@ -6,14 +6,13 @@ import com.sarveshparab.util.FileHandler;
 import com.sarveshparab.util.StringManipulator;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ReflectionBasedAnalyser {
@@ -41,8 +40,8 @@ public class ReflectionBasedAnalyser {
         this.semanticAnalyser = semanticAnalyser;
     }
 
-    private List<String> getMethodFeatures(String classname, boolean removeCamelCase) throws ClassNotFoundException {
-        List<String> mNames = new ArrayList<>();
+    private Set<String> getMethodFeatures(String classname, boolean removeCamelCase) throws ClassNotFoundException {
+        Set<String> mNames = new HashSet<>();
 
         Class cls = classLoader.loadClass(classname);
 
@@ -54,18 +53,25 @@ public class ReflectionBasedAnalyser {
             mNames.addAll(Arrays.stream(method.getParameterTypes()).map(Class::getSimpleName).collect(Collectors.toList()));
         }
 
+        Constructor[] cons = cls.getConstructors();
+        for (Constructor con : cons){
+            mNames.add(con.getName());
+            mNames.addAll(Arrays.stream(con.getExceptionTypes()).map(Class::getSimpleName).collect(Collectors.toList()));
+            mNames.addAll(Arrays.stream(con.getParameterTypes()).map(Class::getSimpleName).collect(Collectors.toList()));
+        }
+
         if (removeCamelCase){
             List<List<String>> postRemoval = mNames.stream().map(StringManipulator::removeCamelCase).collect(Collectors.toList());
             mNames.addAll(postRemoval.stream().flatMap(List::stream).collect(Collectors.toList()));
 
-            mNames = semanticAnalyser.removePLWords(semanticAnalyser.removeStopWords(mNames));
+            mNames = new HashSet<>(semanticAnalyser.removePLWords(semanticAnalyser.removeStopWords(mNames)));
         }
 
         return mNames;
     }
 
-    private List<String> getVariableFeatures(String classname, boolean removeCamelCase) throws ClassNotFoundException {
-        List<String> vNames = new ArrayList<>();
+    private Set<String> getVariableFeatures(String classname, boolean removeCamelCase) throws ClassNotFoundException {
+        Set<String> vNames = new HashSet<>();
 
         Class cls = classLoader.loadClass(classname);
         Field[] fields = cls.getFields();
@@ -86,14 +92,14 @@ public class ReflectionBasedAnalyser {
             List<List<String>> postRemoval = vNames.stream().map(StringManipulator::removeCamelCase).collect(Collectors.toList());
             vNames.addAll(postRemoval.stream().flatMap(List::stream).collect(Collectors.toList()));
 
-            vNames = semanticAnalyser.removePLWords(semanticAnalyser.removeStopWords(vNames));
+            vNames = new HashSet<>(semanticAnalyser.removePLWords(semanticAnalyser.removeStopWords(vNames)));
         }
 
         return vNames;
     }
 
-    private List<String> getInheritanceFeatures(String classname, boolean removeCamelCase) throws ClassNotFoundException {
-        List<String> iNames = new ArrayList<>();
+    private Set<String> getInheritanceFeatures(String classname, boolean removeCamelCase) throws ClassNotFoundException {
+        Set<String> iNames = new HashSet<>();
 
         Class cls = classLoader.loadClass(classname);
         Class[] inheritences = cls.getInterfaces();
@@ -115,18 +121,18 @@ public class ReflectionBasedAnalyser {
             List<List<String>> postRemoval = iNames.stream().map(StringManipulator::removeCamelCase).collect(Collectors.toList());
             iNames.addAll(postRemoval.stream().flatMap(List::stream).collect(Collectors.toList()));
 
-            iNames = semanticAnalyser.removePLWords(semanticAnalyser.removeStopWords(iNames));
+            iNames = new HashSet<>(semanticAnalyser.removePLWords(semanticAnalyser.removeStopWords(iNames)));
         }
 
         return iNames;
     }
 
-    public List<String> extractAllFeatures(String className){
-        List<String> features = new ArrayList<>();
+    public Set<String> extractAllFeatures(String className, boolean loadPreComputed){
+        Set<String> features = new HashSet<>();
 
         String reflectDataDumpLoc = Conf.REFLECT_ANALYSIS_DUMP_DIR + StringManipulator.changeDotToUnderscore(className) + ".data";
 
-        if(FileHandler.doesFileExists(reflectDataDumpLoc)){
+        if(loadPreComputed && FileHandler.doesFileExists(reflectDataDumpLoc)){
             System.out.print("Loaded from existing ... ");
             return FileHandler.readListFromFile(reflectDataDumpLoc);
         }
