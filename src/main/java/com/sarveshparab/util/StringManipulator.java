@@ -23,9 +23,15 @@ public class StringManipulator {
 
     public static List<String> removeCamelCase(String str){
         List<String> postRemoval = Arrays.asList(str.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])"));
-
-
         return postRemoval;
+    }
+
+    public static String changeDotToUnderscore(String str){
+        return str.replaceAll("\\.", "_");
+    }
+
+    public static String changeUnderscoreToDot(String str){
+        return str.replaceAll("_", "\\.");
     }
 
 }
