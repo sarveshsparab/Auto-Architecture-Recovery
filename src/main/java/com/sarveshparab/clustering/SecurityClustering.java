@@ -18,28 +18,33 @@ public class SecurityClustering {
         filenames=new ArrayList<>();
     }
 
-
     public List<String> generateCluster(Set<String> smellyFiles){
 
         int count = 0;
 
+        Set<String> exactWords = new HashSet<>();
+
+
         for(String concernFile:smellyFiles) {
-            Set<String> fileWords = reflectionBasedAnalyser.extractAllFeatures(concernFile, false);
+            Set<String> fileWords = reflectionBasedAnalyser.extractAllFeatures(concernFile, true);
             //pass file words to domain analyser
             DomainAnalyser domainAnalyser = new DomainAnalyser(semanticAnalyser);
             //receive output from domain in a map
-            HashMap<Enum<MatchType>, List<String>> wordMacthes = domainAnalyser.returnMatches(fileWords);
-            System.out.println("\nxxxxx-- "+concernFile+","+
-                    wordMacthes.get(MatchType.EXACT).size()+","+wordMacthes.get(MatchType.SYNONYM).size()
-                    +","+wordMacthes.get(MatchType.HYBRID).size());
+            HashMap<Enum<MatchType>, List<String>> wordMatches = domainAnalyser.returnMatches(fileWords);
 
-            if (wordMacthes.get(MatchType.EXACT).size() >= 3 || wordMacthes.get(MatchType.SYNONYM).size() >= 10
-            || wordMacthes.get(MatchType.HYBRID).size()>=10) {
+            System.out.println(concernFile+","+
+                    wordMatches.get(MatchType.EXACT).size()+","+wordMatches.get(MatchType.SYNONYM).size()
+                    +","+wordMatches.get(MatchType.HYBRID).size()+","+fileWords.size());
+
+            if (wordMatches.get(MatchType.EXACT).size() >= 3 && wordMatches.get(MatchType.SYNONYM).size() >= 2){
+                filenames.add(concernFile);
+                exactWords.addAll(wordMatches.get(MatchType.EXACT));
+            } else if(wordMatches.get(MatchType.HYBRID).size()>=10) {
                 filenames.add(concernFile);
             }
 
             count++;
-            System.out.println("Processing : " + count + " / " + smellyFiles.size());
+//            System.out.println("Processing : " + count + " / " + smellyFiles.size());
         }
 
         return filenames;
