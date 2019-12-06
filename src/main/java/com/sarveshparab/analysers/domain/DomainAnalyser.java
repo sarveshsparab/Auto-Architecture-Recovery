@@ -2,6 +2,8 @@ package com.sarveshparab.analysers.domain;
 
 import com.sarveshparab.analysers.semantic.SemanticAnalyser;
 import com.sarveshparab.analysers.semantic.linguistic.SimAlgo;
+import com.sarveshparab.analysers.semantic.similarity.SentenceSimilarity;
+import com.sarveshparab.analysers.semantic.similarity.SentenceSimilarityAlgorithms;
 import com.sarveshparab.config.Conf;
 import com.sarveshparab.util.FileHandler;
 
@@ -47,6 +49,17 @@ public class DomainAnalyser {
                     synonymMatches.add(fileWord);
                 }
             }
+      }
+
+      for(String fileWord:fileWords){
+          for(String domainWord:domainSet){
+              SentenceSimilarityAlgorithms sentenceSimilarityAlgorithms=new SentenceSimilarityAlgorithms();
+              double sim=sentenceSimilarityAlgorithms.avgSimilarity(fileWord,domainWord);
+              if(sim>0.60){
+                  hybridMatches.add(fileWord);
+              }
+
+          }
       }
 
       returnMap.put(MatchType.EXACT,exactMatches);
