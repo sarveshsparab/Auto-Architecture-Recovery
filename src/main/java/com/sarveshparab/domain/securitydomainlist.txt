@@ -8,7 +8,7 @@ authorize
 authorization
 authorized
 auth
-verfiy
+verify
 validate
 encryption
 encrypt
@@ -49,7 +49,6 @@ provide
 leader
 learner
 invalid
-scheme
 election
 login
 register
@@ -57,7 +56,6 @@ registration
 context
 key
 group
-X509
 password
 passphrase
 status
@@ -71,7 +69,6 @@ clientname
 retry
 retries
 observing
-id
 voting
 connections
 connect
