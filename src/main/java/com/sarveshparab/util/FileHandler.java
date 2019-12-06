@@ -49,7 +49,11 @@ public class FileHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return lines;
+    }
+
+    public static boolean doesFileExists(String filePath){
+
+        return Files.exists(Paths.get(filePath));
     }
 }
