@@ -134,7 +134,7 @@ public class ReflectionBasedAnalyser {
 
         if(loadPreComputed && FileHandler.doesFileExists(reflectDataDumpLoc)){
             System.out.print("Loaded from existing ... ");
-            return FileHandler.readListFromFile(reflectDataDumpLoc);
+            return FileHandler.readSetFromFile(reflectDataDumpLoc);
         }
 
         try {
@@ -142,7 +142,7 @@ public class ReflectionBasedAnalyser {
             features.addAll(getVariableFeatures(className, true));
             features.addAll(getInheritanceFeatures(className, true));
 
-            FileHandler.writeListToFile(reflectDataDumpLoc, features);
+            FileHandler.writeSetToFile(reflectDataDumpLoc, features);
         } catch (ClassNotFoundException e){
             System.err.println("Failed for : " + className + "   |   -> " + e.getMessage());
         }

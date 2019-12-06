@@ -11,8 +11,8 @@ public class PLKeyWords {
     private Set<String> cKeyWords;
 
     public PLKeyWords() {
-        javaKeyWords = FileHandler.readListFromFile(Conf.JAVA_KEY_WORDS_FILE);
-        cKeyWords = FileHandler.readListFromFile(Conf.C_KEY_WORDS_FILE);
+        javaKeyWords = FileHandler.readSetFromFile(Conf.JAVA_KEY_WORDS_FILE);
+        cKeyWords = FileHandler.readSetFromFile(Conf.C_KEY_WORDS_FILE);
     }
 
     public List<String> removeJavaWords(List<String> words){

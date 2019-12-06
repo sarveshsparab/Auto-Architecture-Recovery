@@ -8,7 +8,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public class FileHandler {
@@ -30,22 +32,22 @@ public class FileHandler {
         return returnArray;
     }
 
-    public static void writeListToFile(String filePath, List<String> stringList) {
+    public static void writeSetToFile(String filePath, Set<String> stringList) {
 
         Path out = Paths.get(filePath);
         try {
-            Files.write(out,stringList, Charset.defaultCharset());
+            Files.write(out, stringList, Charset.defaultCharset());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    public static List<String> readListFromFile(String filePath){
+    public static Set<String> readSetFromFile(String filePath){
 
-        List<String> lines = new ArrayList<>();
+        Set<String> lines = new HashSet<>();
         try {
-         lines = Files.readAllLines(new File(filePath).toPath(), Charset.defaultCharset() );
+         lines = new HashSet<>(Files.readAllLines(new File(filePath).toPath(), Charset.defaultCharset() ));
         } catch (IOException e) {
             e.printStackTrace();
         }
