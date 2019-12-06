@@ -2,7 +2,6 @@ package com.sarveshparab.analysers.domain;
 
 import com.sarveshparab.analysers.semantic.SemanticAnalyser;
 import com.sarveshparab.analysers.semantic.linguistic.SimAlgo;
-import com.sarveshparab.analysers.semantic.similarity.SentenceSimilarity;
 import com.sarveshparab.analysers.semantic.similarity.SentenceSimilarityAlgorithms;
 import com.sarveshparab.config.Conf;
 import com.sarveshparab.util.FileHandler;
@@ -31,7 +30,7 @@ public class DomainAnalyser {
         similarityAlgos=new ArrayList<>();
     }
 
-    public HashMap<Enum<MatchType> , List<String>> returnMatches(List<String> fileWords){
+    public HashMap<Enum<MatchType> , List<String>> returnMatches(Set<String> fileWords){
       HashMap<Enum<MatchType>,List<String>> returnMap=new HashMap<>();
       List<String> exactMatches=new ArrayList<>();
       List<String> synonymMatches=new ArrayList<>();
@@ -61,35 +60,7 @@ public class DomainAnalyser {
 
           }
 
-
       }
-
-//
-//      for(String word:fileWords){
-//          if(domainSet.contains(word)){
-//              exactMatches.add(word);
-//          }
-//      }
-//
-//      for(String fileWord:fileWords){
-//            for(String domainWord:domainSet){
-//                double sim=semanticAnalyser.simWords(fileWord.toLowerCase(),domainWord.toLowerCase(),similarityAlgos.get(4));
-//                if(sim>0.60){
-//                    synonymMatches.add(fileWord);
-//                }
-//            }
-//      }
-//
-//      for(String fileWord:fileWords){
-//          for(String domainWord:domainSet){
-//              SentenceSimilarityAlgorithms sentenceSimilarityAlgorithms=new SentenceSimilarityAlgorithms();
-//              double sim=sentenceSimilarityAlgorithms.avgSimilarity(fileWord,domainWord);
-//              if(sim>0.60){
-//                  hybridMatches.add(fileWord);
-//              }
-//
-//          }
-//      }
 
       returnMap.put(MatchType.EXACT,exactMatches);
       returnMap.put(MatchType.SYNONYM,synonymMatches);
@@ -99,8 +70,7 @@ public class DomainAnalyser {
     }
 
 
-    public void populateAlgo(List<SimAlgo> saList){
-
+    private void populateAlgo(List<SimAlgo> saList){
         saList.add(SimAlgo.WuPalmer);
         saList.add(SimAlgo.Resnik);
         saList.add(SimAlgo.JiangConrath);
