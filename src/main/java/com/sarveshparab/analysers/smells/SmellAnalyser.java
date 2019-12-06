@@ -36,7 +36,7 @@ public class SmellAnalyser {
             if (smellStructure.getNodeType() == Node.ELEMENT_NODE) {
                 // get smell type
                 String smellType = smellStructure.getNodeName().substring(smellStructure.getNodeName().lastIndexOf('.') + 1);
-                System.out.println("Smell Type " +smellType);
+//                System.out.println("Smell Type " +smellType);
 
                 // find smelly files in that smell
                 Set<String> files = getSmellyFilesFromSmellType(smellStructure);
@@ -84,7 +84,7 @@ public class SmellAnalyser {
 
                     String referencePresent = ((Element) nodes.item(z)).getAttribute("reference");
 
-                    System.out.println(((Element) nodes.item(z)).getAttribute("reference"));
+//                    System.out.println(((Element) nodes.item(z)).getAttribute("reference"));
 
                     if(referencePresent.trim().length() !=0){
 
@@ -97,11 +97,11 @@ public class SmellAnalyser {
                             XPathExpression expr =  xPath.compile(referencePresent.trim());
                             Object result = expr.evaluate(element, XPathConstants.NODE);
                             Element newNode = (Element) result;
-                            System.out.println(" get from reference");
+//                            System.out.println(" get from reference");
                             files.addAll(getFiles(newNode));
 
                         } catch (XPathExpressionException e) {
-                            System.out.println(" ERROR!!!!");
+//                            System.out.println(" ERROR!!!!");
                             e.printStackTrace();
                         }
 
@@ -110,7 +110,7 @@ public class SmellAnalyser {
 
                     else {
                         // pick up smelly files
-                        System.out.println(" get from normal");
+//                        System.out.println(" get from normal");
                         files.addAll(getFiles(element));
                     }
 
