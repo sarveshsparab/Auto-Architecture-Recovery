@@ -30,4 +30,5 @@ public class Conf {
 
     public static final String SECURITY_CLUSTER_DUMP = "src/main/resources/data/SecurityClustering/secClusters.data";
 
+    public static final String SECURITY_CLUSTER_DUMP_WITH_IMPORTS_DIFF = "src/main/resources/data/SecurityClustering/secClusters_withImportDiff.data";
 }
