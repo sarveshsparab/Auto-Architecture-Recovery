@@ -11,12 +11,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class DomainAnalyser {
-    //compare with domain file list
-    //check for exact match and add to list of exact matches
-    //check for synonym match(threshold based sim) algo 4 and dump to a list
-    //use sonali's algo threshold based
-    //map.get("exact")
-
     private HashSet<String> domainSet;
     private String fileContent;
     private List<String> data;
@@ -54,7 +48,6 @@ public class DomainAnalyser {
               double hybridSim=sentenceSimilarityAlgorithms.avgSimilarity(word,domainWord);
               if(sim>0.30){
                   synonymMatches.add(word);
-//                  System.out.println(domainWord + " == " + word + " ----> " + sim);
                   continue process;
               }
               else if(hybridSim>0.80){
