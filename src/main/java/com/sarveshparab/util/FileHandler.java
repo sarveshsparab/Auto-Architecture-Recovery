@@ -120,6 +120,16 @@ public class FileHandler {
         }
     }
 
+    public static void saveToJson(String filePath, CommitContent jsonObject) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            String json = objectMapper.writeValueAsString(jsonObject);
+            Files.write(Paths.get(filePath), json.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static Map<String, CommitContent> loadFromJson(String filePath) {
         String jsonObjectString = FileHandler.readLineByLine(filePath);
         List<CommitContent> ccl = new ArrayList<>();
