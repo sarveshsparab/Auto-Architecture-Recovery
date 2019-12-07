@@ -47,18 +47,18 @@ public class CommandCentral {
         List<String> secFiles = securityClustering.generateCluster(smellyFiles);
 
         // Analyse import statements across versions of subject system
-        Set<String> importsDiff = new HashSet<>();
+        Set<String> secFilesPostImportAnalysis = new HashSet<>();
         for (String secFile : secFiles) {
 
             Set<String> importsFromPost = fileImportsPopulator.getFileImports(secFile, false);
             Set<String> importsFromPre = fileImportsPopulator.getFileImports(secFile, true);
 
             importsFromPost.removeAll(importsFromPre);
-            importsDiff.addAll(importsFromPost);
+            secFilesPostImportAnalysis.addAll(importsFromPost);
         }
 
-        importsDiff.addAll(secFiles);
-        FileHandler.writeSetToFile(Conf.SECURITY_CLUSTER_DUMP_WITH_IMPORTS_DIFF, importsDiff);
+        secFilesPostImportAnalysis.addAll(secFiles);
+        FileHandler.writeSetToFile(Conf.SECURITY_CLUSTER_DUMP_WITH_IMPORTS_DIFF, secFilesPostImportAnalysis);
 
         // Build git commit analysis on security cluster files
         Map<String, CommitContent> commitContentMap = null;
@@ -68,7 +68,7 @@ public class CommandCentral {
         } else {
             gitCommitAnalyser.gitRemoteClone(Conf.ZK_REMOTE_GIT_URL, Conf.ZK_REMOTE_GIT_REPO);
 
-            Map<String, Integer> commitFreqMap = gitCommitAnalyser.buildFruequencyMap(importsDiff);
+            Map<String, Integer> commitFreqMap = gitCommitAnalyser.buildFreqMap(secFilesPostImportAnalysis);
             commitContentMap = new HashMap<>();
             for (Map.Entry<String, Integer> entry : commitFreqMap.entrySet()){
                 CommitContent cc = new CommitContent();
@@ -81,6 +81,11 @@ public class CommandCentral {
                 cc.setAffectedFilesCount(cc.getAffectedFiles().size());
                 cc.setAnalysedMsg(semanticAnalyser.processString(cc.getMessage()));
                 cc.setIssueId(StringManipulator.extractIssueId(cc.getMessage()));
+
+                Set<String> secFilesIntersect = new HashSet<>(secFilesPostImportAnalysis);
+                secFilesIntersect.retainAll(cc.getAffectedFiles());
+
+                cc.setSecFiles(secFilesIntersect);
 
                 commitContentMap.put(entry.getKey(), cc);
             }

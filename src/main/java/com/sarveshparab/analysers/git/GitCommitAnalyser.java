@@ -132,7 +132,7 @@ public class GitCommitAnalyser {
         return commitIds;
     }
 
-    public Map<String, Integer> buildFruequencyMap(Set<String> fileNames) {
+    public Map<String, Integer> buildFreqMap(Set<String> fileNames) {
 
         List<String> cummlativeCommitIds = new ArrayList<>();
 

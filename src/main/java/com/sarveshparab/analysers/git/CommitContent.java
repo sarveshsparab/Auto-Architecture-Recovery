@@ -15,6 +15,7 @@ public class CommitContent {
     private String issueId;
     private String commitURL;
     private int secFilesCount;
+    private Set<String> secFiles;
 
     public CommitContent() {
         id = "";
@@ -25,9 +26,10 @@ public class CommitContent {
         issueId = "";
         commitURL = "";
         secFilesCount = 0;
+        secFiles = new HashSet<>();
     }
 
-    public CommitContent(String id, String message, List<String> affectedFiles, int affectedFilesCount, Set<String> analysedMsg, String issueId, String commitURL, int secFilesCount) {
+    public CommitContent(String id, String message, List<String> affectedFiles, int affectedFilesCount, Set<String> analysedMsg, String issueId, String commitURL, int secFilesCount, Set<String> secFiles) {
         this.id = id;
         this.message = message;
         this.affectedFiles = affectedFiles;
@@ -36,6 +38,7 @@ public class CommitContent {
         this.issueId = issueId;
         this.commitURL = commitURL;
         this.secFilesCount = secFilesCount;
+        this.secFiles = secFiles;
     }
 
     public String getId() {
@@ -100,5 +103,13 @@ public class CommitContent {
 
     public void setSecFilesCount(int secFilesCount) {
         this.secFilesCount = secFilesCount;
+    }
+
+    public Set<String> getSecFiles() {
+        return secFiles;
+    }
+
+    public void setSecFiles(Set<String> secFiles) {
+        this.secFiles = secFiles;
     }
 }
