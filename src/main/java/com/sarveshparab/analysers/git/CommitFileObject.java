@@ -11,6 +11,7 @@ public class CommitFileObject {
     List<String> deletedFiles = new ArrayList<>();
     List<String> copiedFiles = new ArrayList<>();
     List<String> renamedFiles = new ArrayList<>();
+    List<String> affectedFiles = new ArrayList<>();
 
     public CommitFileObject(){
 
@@ -21,6 +22,7 @@ public class CommitFileObject {
         this.addedFiles = addedFiles;
         this.modifiedFiles = modifiedFiles;
         this.deletedFiles = deletedFiles;
+        affectedFiles = new ArrayList<>();
     }
 
     public List<String> getAddedFiles() {
@@ -61,5 +63,14 @@ public class CommitFileObject {
 
     public void setRenamedFiles(List<String> renamedFiles) {
         this.renamedFiles = renamedFiles;
+    }
+
+    public List<String> getAffectedFiles() {
+        affectedFiles.addAll(this.getAddedFiles());
+        affectedFiles.addAll(this.getCopiedFiles());
+        affectedFiles.addAll(this.getDeletedFiles());
+        affectedFiles.addAll(this.getModifiedFiles());
+        affectedFiles.addAll(this.getRenamedFiles());
+        return affectedFiles;
     }
 }
