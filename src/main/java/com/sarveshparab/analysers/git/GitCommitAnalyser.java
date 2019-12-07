@@ -70,8 +70,8 @@ public class GitCommitAnalyser {
 
             try (RevWalk walk = new RevWalk(repository)) {
                 RevCommit commit = walk.parseCommit(id);
-                System.out.println("Commit Message for commit id " + commitId);
-                System.out.println(commit.getFullMessage());
+//                System.out.println("Commit Message for commit id " + commitId);
+//                System.out.println(commit.getFullMessage());
                 commitMessage = commit.getFullMessage();
             }
         } catch (IOException e) {
@@ -182,7 +182,7 @@ public class GitCommitAnalyser {
                 .sorted((Map.Entry.<String, Integer>comparingByValue().reversed()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
-        System.out.println(sortedByCount.toString());
+       // System.out.println(sortedByCount.toString());
 
         return sortedByCount;
 
