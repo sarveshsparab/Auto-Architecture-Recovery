@@ -28,6 +28,7 @@ public class Conf {
     public static final String ZK_PRE_SMELL_FILE = "src/main/resources/subjectsystem/pre/arcoutput/zk_pre_arc_smells.ser";
 
     public static final String REFLECT_ANALYSIS_DUMP_DIR = "src/main/resources/data/ReflectionData/";
+    public static final String REFLECT_ANALYSIS_POST_COMMIT_DUMP_DIR = "src/main/resources/data/ReflectionData/Post/";
 
     public static final String JAVA_KEY_WORDS_FILE = "src/main/resources/data/PLWords/javaKeyWords.txt";
     public static final String C_KEY_WORDS_FILE = "src/main/resources/data/PLWords/cKeyWords.txt";
