@@ -27,8 +27,8 @@ public class Conf {
 
     public static final String ZK_PRE_SMELL_FILE = "src/main/resources/subjectsystem/pre/arcoutput/zk_pre_arc_smells.ser";
 
-    public static final String REFLECT_ANALYSIS_DUMP_DIR = "src/main/resources/data/ReflectionData/";
-    public static final String REFLECT_ANALYSIS_POST_COMMIT_DUMP_DIR = "src/main/resources/data/ReflectionData/Post/";
+    public static final String REFLECT_ANALYSIS_PRE_COMMIT_DUMP_DIR = "src/main/resources/data/output/ReflectionData/";
+    public static final String REFLECT_ANALYSIS_POST_COMMIT_DUMP_DIR = "src/main/resources/data/output/ReflectionData/Post/";
 
     public static final String JAVA_KEY_WORDS_FILE = "src/main/resources/data/PLWords/javaKeyWords.txt";
     public static final String C_KEY_WORDS_FILE = "src/main/resources/data/PLWords/cKeyWords.txt";
@@ -37,5 +37,8 @@ public class Conf {
     public static final String SECURITY_CLUSTER_DUMP_WITH_IMPORTS_DIFF = "src/main/resources/data/output/SecurityClustering/secClusters_withImportDiff.data";
     public static final String SMELLY_ANALYSIS_DUMP = "src/main/resources/data/output/SmellAnalysis/smells.data";
     public static final String COMMIT_CONTENT_DUMP = "src/main/resources/data/output/CommitAnalysis/commitContent.json";
+    public static final String COMMIT_CONTENT_BREACHING_THRESHOLD = "src/main/resources/data/output/CommitAnalysis/commitContentBreachingThreshold.json";
+    public static final String COMMIT_CONTENT_MSG_BREACHING_THRESHOLD = "src/main/resources/data/output/CommitAnalysis/commitContentMsgBreachingThreshold.json";
+    public static final String FINAL_CLUSTERS = "src/main/resources/data/output/Clusters/";
 
 }
