@@ -49,16 +49,13 @@ public class GitTreeUtil {
             }
 
             walk.dispose();
-
             return treeParser;
         }
-
     }
 
     public static CommitFileObject listDiff(Git git, Repository repository,RevCommit oldCommit, RevCommit newCommit) {
 
         CommitFileObject commitFileObject = new CommitFileObject();
-
         List<DiffEntry> diffs;
 
         try {
@@ -67,11 +64,9 @@ public class GitTreeUtil {
                     .setNewTree(prepareTreeParser(newCommit,repository))
                     .call();
 
-            System.out.println("Found: " + diffs.size() + " differences");
             for (DiffEntry diff : diffs) {
 
                 String changeType = diff.getChangeType().toString();
-
                 String newPath = diff.getNewPath();
                 String oldPath = diff.getOldPath();
 
@@ -96,9 +91,7 @@ public class GitTreeUtil {
                 }else{
                     commitFileObject.getCopiedFiles().add(newPath);
                 }
-
             }
-
         } catch (GitAPIException e) {
             System.out.println("Error in parsing tree[GIT API ERROR]");
             e.printStackTrace();
@@ -109,6 +102,4 @@ public class GitTreeUtil {
 
         return commitFileObject;
     }
-
-
 }
