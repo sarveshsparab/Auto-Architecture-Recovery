@@ -47,7 +47,7 @@ public class SemanticAnalyser {
         // Read the contents of the smelly files
         for (String smellyFile : smellyFiles) {
             String fileLoc = Conf.ZK_PRE_CODE_BASE_PATH +
-                    StringManipulator.packagePathToSysPath(smellyFile, "/") + Conf.FILE_EXT;
+                    StringManipulator.packagePathToSysPath(smellyFile, "/") + Conf.JAVA_FILE_EXT;
             String fileContents = FileHandler.readLineByLine(fileLoc);
             fileContentsMap.put(smellyFile, fileContents);
         }
@@ -56,8 +56,8 @@ public class SemanticAnalyser {
 
     public double simJavaFiles(String file1, String file2, SimAlgo simAlgo, Boolean hasPackagePath){
         if(hasPackagePath){
-            file1 = Conf.ZK_PRE_CODE_BASE_PATH + StringManipulator.packagePathToSysPath(file1, "/") + Conf.FILE_EXT;
-            file2 = Conf.ZK_PRE_CODE_BASE_PATH + StringManipulator.packagePathToSysPath(file2, "/") + Conf.FILE_EXT;
+            file1 = Conf.ZK_PRE_CODE_BASE_PATH + StringManipulator.packagePathToSysPath(file1, "/") + Conf.JAVA_FILE_EXT;
+            file2 = Conf.ZK_PRE_CODE_BASE_PATH + StringManipulator.packagePathToSysPath(file2, "/") + Conf.JAVA_FILE_EXT;
         }
         String sent1 = FileHandler.readLineByLine(file1);
         String sent2 = FileHandler.readLineByLine(file2);
