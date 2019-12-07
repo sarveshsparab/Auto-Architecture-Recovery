@@ -97,4 +97,8 @@ public class SemanticAnalyser {
         return removePLWords(new ArrayList<>(words));
     }
 
+    public Set<String> processString(String str){
+        return new HashSet<>(sentenceSimilarity.processString(str));
+    }
+
 }
