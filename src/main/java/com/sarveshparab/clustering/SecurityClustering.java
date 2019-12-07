@@ -15,9 +15,9 @@ public class SecurityClustering {
     private SemanticAnalyser semanticAnalyser;
     private List<String> filenames;
 
-    public SecurityClustering(){
-        semanticAnalyser=new SemanticAnalyser();
-        reflectionBasedAnalyser=new ReflectionBasedAnalyser(semanticAnalyser,true);
+    public SecurityClustering(SemanticAnalyser semanticAnalyser, ReflectionBasedAnalyser reflectionBasedAnalyser){
+        this.semanticAnalyser = semanticAnalyser;
+        this.reflectionBasedAnalyser = reflectionBasedAnalyser;
         filenames=new ArrayList<>();
     }
 
@@ -47,7 +47,6 @@ public class SecurityClustering {
             }
 
             count++;
-//            System.out.println("Processing : " + count + " / " + smellyFiles.size());
         }
 
         FileHandler.writeListToFile(Conf.SECURITY_CLUSTER_DUMP, filenames);
