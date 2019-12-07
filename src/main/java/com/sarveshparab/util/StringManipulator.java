@@ -1,5 +1,7 @@
 package com.sarveshparab.util;
 
+import com.sarveshparab.config.Conf;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -10,6 +12,19 @@ public class StringManipulator {
     public static String packagePathToSysPath(String packagePath, String sysDelim) {
         List<String> elems = Arrays.asList(packagePath.split("\\."));
         return String.join(sysDelim, elems);
+    }
+
+
+    public static String sysPathToPackagePath(String sysPath, String sysDelim){
+        List<String> elems = Arrays.asList(sysPath.split("\\/"));
+        String fileName = String.join(sysDelim, elems);
+        if(fileName.contains(Conf.JAVA_FILE_EXT)) {
+            fileName = fileName.replace(Conf.ZK_REMOTE_SRC_PATH, "").replace(Conf.JAVA_FILE_EXT, "");
+        }else{
+            fileName = null;
+        }
+        return fileName;
+
     }
 
     public static String listToString(List<String> s, String delimiter){

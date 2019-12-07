@@ -1,5 +1,8 @@
 package com.sarveshparab.analysers.git;
 
+import com.sarveshparab.config.Conf;
+import com.sarveshparab.util.StringManipulator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,11 +69,31 @@ public class CommitFileObject {
     }
 
     public List<String> getAffectedFiles() {
-        affectedFiles.addAll(this.getAddedFiles());
-        affectedFiles.addAll(this.getCopiedFiles());
-        affectedFiles.addAll(this.getDeletedFiles());
-        affectedFiles.addAll(this.getModifiedFiles());
-        affectedFiles.addAll(this.getRenamedFiles());
+
+        affectedFiles.addAll(changeSysPathToPackage(this.getAddedFiles()));
+        affectedFiles.addAll(changeSysPathToPackage(this.getCopiedFiles()));
+        affectedFiles.addAll(changeSysPathToPackage(this.getDeletedFiles()));
+        affectedFiles.addAll(changeSysPathToPackage(this.getModifiedFiles()));
+        affectedFiles.addAll(changeSysPathToPackage(this.getRenamedFiles()));
+
         return affectedFiles;
+    }
+
+
+    private List<String> changeSysPathToPackage(List<String> fileNames){
+
+        List<String> filesModified = new ArrayList<>();
+        for(String file : fileNames){
+            file= StringManipulator.sysPathToPackagePath(file,"/");
+            if(file !=null){
+                filesModified.add(file);
+            }
+        }
+
+
+//        return fileNames.stream();
+
+
+        return filesModified;
     }
 }
