@@ -73,6 +73,7 @@ org.apache.zookeeper.server.quorum.LearnerZooKeeperServer
 org.apache.zookeeper.server.NIOServerCnxn
 org.apache.zookeeper.server.quorum.AuthFastLeaderElection
 org.apache.zookeeper.admin.ZooKeeperAdmin
+org.apache.zookeeper.common.StringUtils
 org.apache.zookeeper.server.quorum.ProposalRequestProcessor
 org.apache.zookeeper.server.ZooKeeperServerConf
 org.apache.zookeeper.server.quorum.FollowerRequestProcessor
