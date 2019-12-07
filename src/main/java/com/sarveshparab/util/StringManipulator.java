@@ -2,6 +2,8 @@ package com.sarveshparab.util;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StringManipulator {
 
@@ -32,6 +34,25 @@ public class StringManipulator {
 
     public static String changeUnderscoreToDot(String str){
         return str.replaceAll("_", "\\.");
+    }
+
+
+    public static String extractIssueId(String commitMessage){
+
+        String issueId = null;
+
+        if(commitMessage.contains("ZOOKEEPER-")){
+            Pattern pattern = Pattern.compile("(ZOOKEEPER-)\\w+");
+            Matcher matcher = pattern.matcher(commitMessage);
+            if (matcher.find())
+            {
+                issueId = matcher.group();
+            }
+
+        }
+
+
+        return issueId;
     }
 
 }
