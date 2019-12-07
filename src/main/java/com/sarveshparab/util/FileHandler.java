@@ -1,5 +1,8 @@
 package com.sarveshparab.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sarveshparab.analysers.git.CommitContent;
 import com.sarveshparab.config.Conf;
 
 import java.io.File;
@@ -105,5 +108,35 @@ public class FileHandler {
         }
 
         return stringTMap;
+    }
+
+    public static void saveToJson(String filePath, Map<String, CommitContent> jsonObject) {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+
+        try {
+            String json = objectMapper.writeValueAsString(jsonObject);
+            Files.write(Paths.get(filePath), json.getBytes());
+            System.out.println("json = " + json);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Map<String,CommitContent> loadFromJson(String filePath){
+
+     String jsonObjectString =  FileHandler.readLineByLine(filePath);
+
+     Map <String,CommitContent> result= new HashMap<>();
+
+        try {
+            result = new ObjectMapper().readValue(jsonObjectString, Map.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
