@@ -55,7 +55,7 @@ public class SentenceSimilarity {
         return scores;
     }
 
-    private List<String> processString(String sent) {
+    public List<String> processString(String sent) {
         List<String> strTokens;
 
         strTokens = lemmatizer.lemmatize(sent);
