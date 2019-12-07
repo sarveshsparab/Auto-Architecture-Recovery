@@ -37,6 +37,12 @@ Each cluster has the following information:
 3. Run the CommandCentral file to for security architecture decision recovery
 _Note: Tweak required parameters under the config module_
 
+## Visualization
+
+D3 based clustering
+
+![](./src/main/resources/visualizations/viz.png)
+
 ## Info & Acknowledgement
 This is repository is part of the project as per the [USC CSCI 578, Fall '19](http://sunset.usc.edu/classes/cs578_2019f/) graduate course.
 
