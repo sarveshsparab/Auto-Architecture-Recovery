@@ -16,17 +16,17 @@ public class StringManipulator {
 
 
     public static String sysPathToPackagePath(String sysPath){
-        List<String> elems = Arrays.asList(sysPath.split("\\/"));
-        String fileName = String.join(".", elems);
-        if(fileName.contains(Conf.JAVA_FILE_EXT)) {
-            fileName = fileName
+        String fileName;
+        if(Conf.JAVA_FILE_EXT.equals(sysPath.substring(sysPath.length() - 5))) {
+            fileName = sysPath
                     .replace(Conf.ZK_REMOTE_SRC_PATH, "")
                     .replace(Conf.ZK_REMOTE_TEST_PATH, "")
                     .replace(Conf.JAVA_FILE_EXT, "");
         }else{
-            fileName = null;
+            fileName = "";
         }
-        return fileName;
+        List<String> elems = Arrays.asList(fileName.split("\\/"));
+        return String.join(".", elems);
 
     }
 
