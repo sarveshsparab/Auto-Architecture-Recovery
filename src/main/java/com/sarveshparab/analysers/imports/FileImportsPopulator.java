@@ -4,7 +4,6 @@ import com.sarveshparab.util.FileHandler;
 import com.sarveshparab.util.StringManipulator;
 import com.sarveshparab.config.Conf;
 
-import java.io.File;
 import java.util.*;
 
 
@@ -25,10 +24,10 @@ public class FileImportsPopulator {
             String actualpath = "";
             if (usePre) {
                 actualpath = Conf.ZK_PRE_CODE_BASE_PATH +
-                        StringManipulator.packagePathToSysPath(filePath, "/") + Conf.FILE_EXT;
+                        StringManipulator.packagePathToSysPath(filePath, "/") + Conf.JAVA_FILE_EXT;
             } else {
                 actualpath = Conf.ZK_POST_CODE_BASE_PATH +
-                        StringManipulator.packagePathToSysPath(filePath, "/") + Conf.FILE_EXT;
+                        StringManipulator.packagePathToSysPath(filePath, "/") + Conf.JAVA_FILE_EXT;
             }
 
             if(!FileHandler.doesFileExists(actualpath)){
