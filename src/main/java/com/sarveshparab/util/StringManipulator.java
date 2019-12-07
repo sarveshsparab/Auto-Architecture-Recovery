@@ -15,11 +15,14 @@ public class StringManipulator {
     }
 
 
-    public static String sysPathToPackagePath(String sysPath, String sysDelim){
+    public static String sysPathToPackagePath(String sysPath){
         List<String> elems = Arrays.asList(sysPath.split("\\/"));
-        String fileName = String.join(sysDelim, elems);
+        String fileName = String.join(".", elems);
         if(fileName.contains(Conf.JAVA_FILE_EXT)) {
-            fileName = fileName.replace(Conf.ZK_REMOTE_SRC_PATH, "").replace(Conf.JAVA_FILE_EXT, "");
+            fileName = fileName
+                    .replace(Conf.ZK_REMOTE_SRC_PATH, "")
+                    .replace(Conf.ZK_REMOTE_TEST_PATH, "")
+                    .replace(Conf.JAVA_FILE_EXT, "");
         }else{
             fileName = null;
         }

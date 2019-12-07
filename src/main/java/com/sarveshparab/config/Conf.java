@@ -22,6 +22,7 @@ public class Conf {
     public static final String ZK_REMOTE_GIT_REPO = "src/main/resources/data/tmp/gitRepo";
     public static final String ZK_COMMIT_ID = "0383625b5b4adb14b774f322704456596e7ab185";
     public static final String ZK_REMOTE_SRC_PATH = "src/java/main/";
+    public static final String ZK_REMOTE_TEST_PATH = "src/java/test/";
     public static final String ZK_COMMIT_BASE_URL = "https://github.com/apache/zookeeper/tree/";
 
     public static final String ZK_PRE_SMELL_FILE = "src/main/resources/subjectsystem/pre/arcoutput/zk_pre_arc_smells.ser";
