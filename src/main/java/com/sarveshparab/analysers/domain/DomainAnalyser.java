@@ -4,6 +4,7 @@ import com.sarveshparab.analysers.semantic.SemanticAnalyser;
 import com.sarveshparab.analysers.semantic.linguistic.SimAlgo;
 import com.sarveshparab.analysers.semantic.similarity.SentenceSimilarityAlgorithms;
 import com.sarveshparab.config.Conf;
+import com.sarveshparab.config.Params;
 import com.sarveshparab.util.FileHandler;
 import com.sarveshparab.util.Misc;
 
@@ -46,16 +47,14 @@ public class DomainAnalyser {
           for(String domainWord:domainSet){
               double sim=semanticAnalyser.simWords(word,domainWord, SimAlgo.Lin) / Misc.algoMax.get(SimAlgo.Lin.useAlgo());
               double hybridSim=sentenceSimilarityAlgorithms.avgSimilarity(word,domainWord);
-              if(sim>0.30){
+              if(sim > Params.SIMILARITY_MEASURE_THRESHOLD){
                   synonymMatches.add(word);
                   continue process;
               }
-              else if(hybridSim>0.80){
+              else if(hybridSim > Params.HYBRID_SIM_MEASURE_THRESHOLD){
                   hybridMatches.add(word);
               }
-
           }
-
       }
 
       returnMap.put(MatchType.EXACT,exactMatches);
