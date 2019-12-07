@@ -82,7 +82,6 @@ public class GitTreeUtil {
                     oldPath = oldPath.substring(oldPath.indexOf("src"));
                 }
 
-
                 if (changeType.equals("MODIFY")){
                     commitFileObject.getModifiedFiles().add(newPath);
                 }
@@ -98,9 +97,6 @@ public class GitTreeUtil {
                     commitFileObject.getCopiedFiles().add(newPath);
                 }
 
-                System.out.println("Diff: " +changeType + ": " +
-                        (oldPath.equals(newPath) ? newPath: oldPath + " -> " +newPath));
-
             }
 
         } catch (GitAPIException e) {
@@ -110,7 +106,6 @@ public class GitTreeUtil {
             System.out.println("Error in parsing tree[IO EXCEPTION]");
             e.printStackTrace();
         }
-
 
         return commitFileObject;
     }
