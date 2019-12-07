@@ -128,7 +128,7 @@ public class GitCommitAnalyser {
 
     public List<String> getCommitIds(String filePath){
 
-        filePath = Conf.ZK_REMOTE_SRC_PATH + StringManipulator.packagePathToSysPath(filePath,"/")+Conf.FILE_EXT;
+        filePath = Conf.ZK_REMOTE_SRC_PATH + StringManipulator.packagePathToSysPath(filePath,"/")+Conf.JAVA_FILE_EXT;
 
         List<String> commitIds = new ArrayList<>();
 
