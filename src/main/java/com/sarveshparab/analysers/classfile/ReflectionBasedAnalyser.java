@@ -2,6 +2,7 @@ package com.sarveshparab.analysers.classfile;
 
 import com.sarveshparab.analysers.semantic.SemanticAnalyser;
 import com.sarveshparab.config.Conf;
+import com.sarveshparab.config.Params;
 import com.sarveshparab.util.FileHandler;
 import com.sarveshparab.util.StringManipulator;
 
@@ -127,14 +128,18 @@ public class ReflectionBasedAnalyser {
         return iNames;
     }
 
-    public Set<String> extractAllFeatures(String className, boolean loadPreComputed){
+    public Set<String> extractAllFeatures(String className, boolean pre){
         Set<String> features = new HashSet<>();
 
-        String reflectDataDumpLoc = Conf.REFLECT_ANALYSIS_DUMP_DIR + StringManipulator.changeDotToUnderscore(className) + ".data";
+        String preReflectDataDumpLoc = Conf.REFLECT_ANALYSIS_PRE_COMMIT_DUMP_DIR + StringManipulator.changeDotToUnderscore(className) + ".data";
+        String postReflectDataDumpLoc = Conf.REFLECT_ANALYSIS_POST_COMMIT_DUMP_DIR + StringManipulator.changeDotToUnderscore(className) + ".data";
 
-        if(loadPreComputed && FileHandler.doesFileExists(reflectDataDumpLoc)){
-            System.out.print("Loaded from existing ... ");
-            return FileHandler.readSetFromFile(reflectDataDumpLoc);
+        if(pre && Params.LOAD_PRE_COMMIT_REFLECTION_ANALYSIS && FileHandler.doesFileExists(preReflectDataDumpLoc)){
+            System.out.println("Loaded pre-commit reflection analysis files");
+            return FileHandler.readSetFromFile(preReflectDataDumpLoc);
+        }else if(!pre && Params.LOAD_POST_COMMIT_REFLECTION_ANALYSIS && FileHandler.doesFileExists(postReflectDataDumpLoc)){
+            System.out.println("Loaded post-commit reflection analysis files");
+            return FileHandler.readSetFromFile(postReflectDataDumpLoc);
         }
 
         try {
@@ -142,7 +147,10 @@ public class ReflectionBasedAnalyser {
             features.addAll(getVariableFeatures(className, true));
             features.addAll(getInheritanceFeatures(className, true));
 
-            FileHandler.writeSetToFile(reflectDataDumpLoc, features);
+            if (pre)
+                FileHandler.writeSetToFile(preReflectDataDumpLoc, features);
+            else
+                FileHandler.writeSetToFile(postReflectDataDumpLoc, features);
         } catch (ClassNotFoundException e){
             System.err.println("Failed for : " + className + "   |   -> " + e.getMessage());
         }
