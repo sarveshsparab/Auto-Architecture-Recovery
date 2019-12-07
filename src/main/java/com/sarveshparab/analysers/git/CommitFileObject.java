@@ -83,7 +83,7 @@ public class CommitFileObject {
         return fileNames
                 .stream()
                 .map(StringManipulator::sysPathToPackagePath)
-                .filter(Objects::nonNull)
+                .filter(s -> s.length()>0)
                 .collect(Collectors.toList());
     }
 }

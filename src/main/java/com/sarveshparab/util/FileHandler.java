@@ -1,6 +1,6 @@
 package com.sarveshparab.util;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sarveshparab.analysers.git.CommitContent;
 import com.sarveshparab.config.Conf;
@@ -111,32 +111,24 @@ public class FileHandler {
     }
 
     public static void saveToJson(String filePath, Map<String, CommitContent> jsonObject) {
-
         ObjectMapper objectMapper = new ObjectMapper();
-
-
         try {
-            String json = objectMapper.writeValueAsString(jsonObject);
+            String json = objectMapper.writeValueAsString(new ArrayList<>(jsonObject.values()));
             Files.write(Paths.get(filePath), json.getBytes());
-            System.out.println("json = " + json);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static Map<String,CommitContent> loadFromJson(String filePath){
-
-     String jsonObjectString =  FileHandler.readLineByLine(filePath);
-
-     Map <String,CommitContent> result= new HashMap<>();
-
+    public static Map<String, CommitContent> loadFromJson(String filePath) {
+        String jsonObjectString = FileHandler.readLineByLine(filePath);
+        List<CommitContent> ccl = new ArrayList<>();
         try {
-            result = new ObjectMapper().readValue(jsonObjectString, Map.class);
+           ccl = new ObjectMapper().readValue(jsonObjectString, new TypeReference<List<CommitContent>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return result;
+
+        return ccl.stream().collect(Collectors.toMap(CommitContent::getId, v->v));
     }
 }
