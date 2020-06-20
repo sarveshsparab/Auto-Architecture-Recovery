@@ -3,8 +3,9 @@
 This repository contains code that extends the ARC architectural recovery technique to identify security related architectural changes in apache zookeeper.
 
 Project Collaborators:
-1. [Ameya Kulkarni](https://www.linkedin.com/in/ameyabkulkarni/)
-2. [Sonali Gujarathi](https://www.linkedin.com/in/sonaligujarathi/)
+1. [Sarvesh Parab](https://www.linkedin.com/in/sarveshsparab/)
+2. [Ameya Kulkarni](https://www.linkedin.com/in/ameyabkulkarni/)
+3. [Sonali Gujarathi](https://www.linkedin.com/in/sonaligujarathi/)
 
 ## Prerequisite
 - Java 8
